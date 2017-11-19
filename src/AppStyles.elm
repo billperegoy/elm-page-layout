@@ -24,7 +24,7 @@ stylesheet : StyleSheet MyStyles variation
 stylesheet =
     Style.styleSheet
         [ Style.style BodyStyle
-            [ Color.background darkGrey
+            [ Color.background grey
             ]
         , Style.style BlockStyle
             [ sansSerif
@@ -35,15 +35,16 @@ stylesheet =
         , Style.style HeaderStyle
             [ sansSerif
             , Font.size 50
-            , Color.background red
+            , Color.background darkGrey
             ]
         , Style.style FooterStyle
             [ sansSerif
             , Font.size 50
-            , Color.background green
+            , Color.background darkGrey
             ]
         , Style.style SidebarStyle
             [ sansSerif
-            , Font.size 50
+            , Font.size 20
+            , Color.background grey
             ]
         ]

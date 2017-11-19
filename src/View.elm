@@ -8,13 +8,25 @@ import AppStyles
 
 
 blockAttributes =
-    [ width fill, height (px 100) ]
+    [ width (percent 33), height (px 100) ]
+
+
+wrapper =
+    Element.row AppStyles.PageStyle
+        [ padding 20
+        , paddingTop 0
+        , paddingBottom 0
+        ]
+        [ wholePage ]
 
 
 wholePage =
     Element.column AppStyles.PageStyle
-        [ width (px 850) ]
-        [ headerArea, contentArea, footerArea ]
+        [ width (percent 100) ]
+        [ headerArea
+        , contentArea
+        , footerArea
+        ]
 
 
 headerArea =
@@ -30,9 +42,17 @@ footerArea =
 
 
 sidebarArea =
-    el AppStyles.SidebarStyle
-        [ width (px 200) ]
-        (Element.text "Sidebar")
+    Element.column AppStyles.SidebarStyle
+        [ paddingLeft 20
+        , paddingTop 50
+        , width (percent 20)
+        ]
+        [ Element.text "Sidebar"
+        , Element.text "Sidebar"
+        , Element.text "Sidebar"
+        , Element.text "Sidebar"
+        , Element.text "Sidebar"
+        ]
 
 
 contentArea =
@@ -44,8 +64,8 @@ contentArea =
 
 
 bodyArea =
-    Element.row AppStyles.BodyStyle
-        [ padding 10, spacing 7, width (px 600), height (px 300) ]
+    Element.wrappedRow AppStyles.BodyStyle
+        [ padding 10, spacing 7, width (percent 80) ]
         [ el AppStyles.BlockStyle blockAttributes (Element.text "1")
         , el AppStyles.BlockStyle blockAttributes (Element.text "2")
         , el AppStyles.BlockStyle blockAttributes (Element.text "3")
@@ -56,10 +76,15 @@ bodyArea =
         , el AppStyles.BlockStyle blockAttributes (Element.text "8")
         , el AppStyles.BlockStyle blockAttributes (Element.text "9")
         , el AppStyles.BlockStyle blockAttributes (Element.text "A")
+        , el AppStyles.BlockStyle blockAttributes (Element.text "B")
+        , el AppStyles.BlockStyle blockAttributes (Element.text "C")
+        , el AppStyles.BlockStyle blockAttributes (Element.text "D")
+        , el AppStyles.BlockStyle blockAttributes (Element.text "E")
+        , el AppStyles.BlockStyle blockAttributes (Element.text "F")
         ]
 
 
 view : Model -> Html Msg
 view model =
     Element.layout AppStyles.stylesheet <|
-        wholePage
+        wrapper
