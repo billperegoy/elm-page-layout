@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "watch": "elm-live src/*.elm --open --pushstate --output dist/bundle.js --warn --debug",
+    "watch": "elm-live src/*.elm --open --pushstate --output dist/bundle.js --debug",
     "test": "elm-test"
   },
   "author": "",

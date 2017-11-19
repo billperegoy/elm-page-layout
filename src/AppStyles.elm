@@ -47,4 +47,6 @@ stylesheet =
             , Font.size 20
             , Color.background grey
             ]
+        , Style.style PageStyle []
+        , Style.style ContentStyle []
         ]
