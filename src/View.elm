@@ -7,6 +7,7 @@ import Element.Attributes exposing (..)
 import AppStyles
 
 
+blockAttributes : ScreenSize -> List (Element.Internal.Model.Attribute variation msg)
 blockAttributes screenSize =
     case screenSize of
         Phone ->
@@ -22,16 +23,18 @@ blockAttributes screenSize =
             [ width (percent 25), height (px 100) ]
 
 
+wrapper : Model -> Element AppStyles.MyStyles variation Msg
 wrapper model =
     Element.row AppStyles.PageStyle
         [ padding 20
         , paddingTop 0
         , paddingBottom 0
         ]
-        [ wholePage model ]
+        [ pageArea model ]
 
 
-wholePage model =
+pageArea : Model -> Element AppStyles.MyStyles variation Msg
+pageArea model =
     Element.column AppStyles.PageStyle
         [ width (percent 100) ]
         [ headerArea
@@ -40,18 +43,21 @@ wholePage model =
         ]
 
 
+headerArea : Element AppStyles.MyStyles variation msg
 headerArea =
     el AppStyles.HeaderStyle
         []
         (Element.text "Header")
 
 
+footerArea : Element AppStyles.MyStyles variation msg
 footerArea =
     el AppStyles.FooterStyle
         []
         (Element.text "Footer")
 
 
+sidebarArea : Model -> Element AppStyles.MyStyles variation Msg
 sidebarArea model =
     if model.screenSize == Phone then
         Element.empty
@@ -69,12 +75,17 @@ sidebarArea model =
             ]
 
 
+contentArea : Model -> Element AppStyles.MyStyles variation Msg
 contentArea model =
     Element.row AppStyles.ContentStyle
         []
         [ sidebarArea model
-        , bodyArea model
+        , mainContentArea model
         ]
+
+
+
+--bodyWidth : ScreenSize -> Element.Internal.Model.Attribute variation msg
 
 
 bodyWidth screenSize =
@@ -84,25 +95,24 @@ bodyWidth screenSize =
         width (percent 80)
 
 
-bodyArea model =
+blocks : Model -> List (Element AppStyles.MyStyles variation Msg)
+blocks model =
+    List.map (\elem -> (singleBlock model elem))
+        [ "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F" ]
+
+
+singleBlock : Model -> String -> Element AppStyles.MyStyles variation Msg
+singleBlock model value =
+    el AppStyles.BlockStyle
+        (blockAttributes model.screenSize)
+        (Element.text value)
+
+
+mainContentArea : Model -> Element AppStyles.MyStyles variation Msg
+mainContentArea model =
     Element.wrappedRow AppStyles.BodyStyle
         [ padding 10, spacing 7, (bodyWidth model.screenSize) ]
-        [ el AppStyles.BlockStyle (blockAttributes model.screenSize) (Element.text "1")
-        , el AppStyles.BlockStyle (blockAttributes model.screenSize) (Element.text "2")
-        , el AppStyles.BlockStyle (blockAttributes model.screenSize) (Element.text "3")
-        , el AppStyles.BlockStyle (blockAttributes model.screenSize) (Element.text "4")
-        , el AppStyles.BlockStyle (blockAttributes model.screenSize) (Element.text "5")
-        , el AppStyles.BlockStyle (blockAttributes model.screenSize) (Element.text "6")
-        , el AppStyles.BlockStyle (blockAttributes model.screenSize) (Element.text "7")
-        , el AppStyles.BlockStyle (blockAttributes model.screenSize) (Element.text "8")
-        , el AppStyles.BlockStyle (blockAttributes model.screenSize) (Element.text "9")
-        , el AppStyles.BlockStyle (blockAttributes model.screenSize) (Element.text "A")
-        , el AppStyles.BlockStyle (blockAttributes model.screenSize) (Element.text "B")
-        , el AppStyles.BlockStyle (blockAttributes model.screenSize) (Element.text "C")
-        , el AppStyles.BlockStyle (blockAttributes model.screenSize) (Element.text "D")
-        , el AppStyles.BlockStyle (blockAttributes model.screenSize) (Element.text "E")
-        , el AppStyles.BlockStyle (blockAttributes model.screenSize) (Element.text "F")
-        ]
+        (blocks model)
 
 
 view : Model -> Html Msg
